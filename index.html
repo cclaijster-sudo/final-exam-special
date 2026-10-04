@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Special Person 🤍</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100%;font-family:Georgia,"Times New Roman",serif;background:#170611;color:#fff;overflow-x:hidden}
+body{background:
+ radial-gradient(circle at 15% 20%,rgba(255,105,180,.12),transparent 28%),
+ radial-gradient(circle at 85% 70%,rgba(255,180,220,.09),transparent 30%),
+ #170611}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:20}
+.page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 16px;position:relative}
+.card{width:min(900px,100%);min-height:620px;border:1px solid rgba(255,210,235,.25);border-radius:28px;background:rgba(36,7,22,.78);backdrop-filter:blur(10px);box-shadow:0 25px 80px rgba(0,0,0,.45);padding:42px 28px;position:relative;overflow:hidden;text-align:center}
+.glow{position:absolute;width:220px;height:220px;border-radius:50%;filter:blur(65px);opacity:.16;background:#ff5caa}
+.g1{top:-80px;left:-60px}.g2{right:-70px;bottom:-90px}
+.tiny{font-family:Arial,sans-serif;letter-spacing:4px;font-size:11px;color:#f7a8cc;text-transform:uppercase}
+h1{font-size:clamp(45px,9vw,88px);line-height:.9;margin:16px 0 12px;font-weight:400}
+h1 span{display:block;font-style:italic;color:#ffafd4}
+.subtitle{font-family:Arial,sans-serif;color:#eab8cc;font-size:13px;letter-spacing:2px}
+.exam{margin:30px auto 22px;font-family:Arial,sans-serif;font-size:14px;color:#fff;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:11px 17px;border-radius:999px;width:max-content;max-width:100%}
+.book{font-size:72px;filter:drop-shadow(0 8px 20px rgba(255,105,180,.25));animation:float 3s ease-in-out infinite;margin:8px 0 18px}
+@keyframes float{50%{transform:translateY(-9px)}}
+button{border:0;border-radius:999px;padding:13px 24px;background:#f5b4d1;color:#351022;font-weight:700;cursor:pointer;transition:.25s;box-shadow:0 8px 30px rgba(255,150,200,.18)}
+button:hover{transform:translateY(-2px);background:#ffd0e4}
+.message{max-width:690px;margin:25px auto 0;line-height:1.8;font-size:18px;color:#f8dce9;display:none;animation:fade .8s ease}
+.message strong{color:#fff}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.divider{width:90px;height:1px;background:#c8799e;margin:25px auto}
+.signature{font-style:italic;color:#ffafd4;font-size:20px}
+.code{position:absolute;left:18px;right:18px;bottom:14px;opacity:.13;font:11px/1.5 monospace;text-align:left;white-space:nowrap;overflow:hidden}
+.petal{position:absolute;font-size:18px;opacity:.55;animation:drift 8s linear infinite}
+.p1{left:8%;top:25%}.p2{right:10%;top:18%;animation-delay:2s}.p3{left:12%;bottom:22%;animation-delay:4s}.p4{right:14%;bottom:25%;animation-delay:1s}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(20deg)}}
+@media(max-width:600px){.card{padding:35px 18px;min-height:600px}h1{font-size:50px}.message{font-size:16px}.book{font-size:60px}}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+
+<main class="page">
+  <section class="card">
+    <div class="glow g1"></div><div class="glow g2"></div>
+    <div class="petal p1">✦</div><div class="petal p2">✿</div>
+    <div class="petal p3">♡</div><div class="petal p4">✦</div>
+
+    <div class="tiny">A little something for you ♡</div>
+    <h1>Good Luck<span>My Special Person</span></h1>
+    <div class="subtitle">FINAL EXAM • YOU'VE GOT THIS</div>
+
+    <div class="exam">📚 One more battle. One more step toward your dream.</div>
+    <div class="book">📖</div>
+
+    <button id="openBtn">Tap this when you need a little encouragement ♡</button>
+
+    <div class="message" id="message">
+      <p>Hey, <strong>Princess</strong> 🤍</p>
+      <p>
+        I know you've been working hard for this final exam.
+        Maybe there are moments when you're tired, nervous, or wondering
+        whether you're doing enough. But please remember how far you've already come.
+      </p>
+      <div class="divider"></div>
+      <p>
+        So for this final stretch, don't doubt yourself too much.
+        <strong>Trust what you've learned, take a deep breath, and give it your best.</strong>
+      </p>
+      <p>
+        Whatever the result later, I'll still be proud of the effort you gave.
+        Now go show that paper what you're capable of. 🔥
+      </p>
+      <div class="divider"></div>
+      <div class="signature">“You can do this. I believe in you. ♡”</div>
+    </div>
+
+    <div class="code">
+      &lt;system&gt; // encouragement_mode = ON; confidence = 100%; fear = 0%;
+      // if tired → rest(); if nervous → breathe(); if doubt → remember_how_far_you've_come();
+      &lt;/system&gt;
+    </div>
+  </section>
+</main>
+
+<script>
+const btn=document.getElementById("openBtn");
+const msg=document.getElementById("message");
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+let pieces=[];
+
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+addEventListener("resize",resize);resize();
+
+function burst(){
+  pieces=[];
+  for(let i=0;i<130;i++){
+    pieces.push({
+      x:innerWidth/2,y:innerHeight*.53,
+      vx:(Math.random()-.5)*11,vy:Math.random()*-9-2,
+      s:Math.random()*6+3,r:Math.random()*Math.PI,
+      life:120+Math.random()*80
+    });
+  }
+  requestAnimationFrame(animate);
+}
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pieces.forEach(p=>{
+    p.x+=p.vx;p.vy+=.18;p.y+=p.vy;p.r+=.12;p.life--;
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);
+    ctx.globalAlpha=Math.max(0,p.life/130);
+    ctx.fillStyle=["#ffafd4","#ffd7e8","#ffffff","#f58ab9"][Math.floor(Math.random()*4)];
+    ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s);
+    ctx.restore();
+  });
+  pieces=pieces.filter(p=>p.life>0);
+  if(pieces.length)requestAnimationFrame(animate);
+}
+btn.addEventListener("click",()=>{
+  msg.style.display="block";
+  btn.textContent="I believe in you ♡";
+  btn.disabled=true;
+  burst();
+});
+</script>
+</body>
+</html>
